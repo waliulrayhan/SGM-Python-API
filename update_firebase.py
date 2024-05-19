@@ -26,7 +26,7 @@ try:
         capacity_forecast['ds'] = pd.to_datetime(capacity_forecast['ds'])
 
         # Reference to the data
-        ref = db.reference(f'SGM/PredictionPowerPlant/{plant_id}/PredictionDate')
+        ref = db.reference(f'SGM/Prediction/{plant_id}/Date')
 
         # Update Firebase with predictions
         updates = {}

@@ -17,7 +17,7 @@ data_frames = []
 
 for plant_id in plant_ids:
     # Load historical data
-    historical_data = pd.read_csv(f'historical_data_{plant_id}.csv')
+    historical_data = pd.read_csv(f'history_data_{plant_id}.csv')
     historical_data['date'] = pd.to_datetime(historical_data['date'])
     historical_data.set_index('date', inplace=True)
 

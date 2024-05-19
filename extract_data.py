@@ -35,11 +35,11 @@ for plant_id in plant_ids:
         df['plant_id'] = plant_id  # Add plant_id column to distinguish data from different plants
 
         # Save each DataFrame to a separate CSV file
-        df.to_csv(f'historical_data_{plant_id}.csv')
+        df.to_csv(f'history_data_{plant_id}.csv')
         data_frames.append(df)
 
 # Concatenate all DataFrames
 final_df = pd.concat(data_frames)
 
 # Save the combined DataFrame to a CSV file
-final_df.to_csv('historical_data_combined.csv')
+final_df.to_csv('history_data_combined.csv')
