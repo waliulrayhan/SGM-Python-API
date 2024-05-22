@@ -96,7 +96,7 @@ def get_total_demand_ref(distributor_id, current_date):
 
 def get_target_demand_ref(distributor_id, current_date):
     # Reference to the location in the Firebase database for target demand
-    return db.reference(f"SGM/Distributor/{distributor_id}/Date/{current_date}/demand/ddtargetDemand")
+    return db.reference(f"SGM/Distributor/{distributor_id}/Date/{current_date}/demand/ddtargetdemand")
 
 def get_all_distributor_target_demand_ref(current_date):
     # Reference to the location in the Firebase database for all distributor target demand
@@ -117,7 +117,7 @@ def calculate_all_distributor_demands(distributor_ids, current_date):
     all_target_ref.set(all_target_demand)
     all_current_ref.set(all_current_demand)
 
-def update_total_demand(event, total_demand_ref, target_demand_ref, distributor_ids):
+def update_total_demand(event, total_demand_ref, target_demand_ref, alert_ref, current_demand_ref, distributor_ids):
     # Function to update total demand when current demand changes
     new_demand = event.data
     if new_demand is None:
@@ -125,13 +125,15 @@ def update_total_demand(event, total_demand_ref, target_demand_ref, distributor_
     cumulative_sum = total_demand_ref.get() or 0
     cumulative_sum += new_demand
     total_demand_ref.set(cumulative_sum)
+    data = current_demand_ref.get() or 0
+
+    # Get target demand
+    target_demand = target_demand_ref.get() or 0
+    
+    # Update alert status
+    alert_ref.set(data <= float(target_demand / 17280))  # Ensure target demad is treated as numeric
     
     # Update all distributor demands
-    current_date = get_current_date()
-    calculate_all_distributor_demands(distributor_ids, current_date)
-
-def update_target_demand(event, distributor_ids):
-    # Function to update the total target demand when any target demand changes
     current_date = get_current_date()
     calculate_all_distributor_demands(distributor_ids, current_date)
 
@@ -145,12 +147,13 @@ def monitor_demand_changes(distributor_ids):
         current_demand_ref = get_current_demand_ref(distributor_id, current_date)
         total_demand_ref = get_total_demand_ref(distributor_id, current_date)
         target_demand_ref = get_target_demand_ref(distributor_id, current_date)
-        
+        alert_ref = db.reference(f"SGM/Distributor/{distributor_id}/Date/{current_date}/alert")
+
         # Listen for changes to current demand for the current distributor
-        current_demand_ref.listen(lambda event, total_demand_ref=total_demand_ref, target_demand_ref=target_demand_ref, distributor_ids=distributor_ids: update_total_demand(event, total_demand_ref, target_demand_ref, distributor_ids))
-        
+        current_demand_ref.listen(lambda event, total_demand_ref=total_demand_ref, target_demand_ref=target_demand_ref, alert_ref=alert_ref, current_demand_ref=current_demand_ref: update_total_demand(event, total_demand_ref, target_demand_ref, alert_ref, current_demand_ref, distributor_ids))
+
         # Listen for changes to target demand for the current distributor
-        target_demand_ref.listen(lambda event, distributor_ids=distributor_ids: update_target_demand(event, distributor_ids))
+        target_demand_ref.listen(lambda event, distributor_ids=distributor_ids: calculate_all_distributor_demands(distributor_ids, current_date))
 
 if __name__ == "__main__":
     powerplant_ids = ["-NxXNR6vVdQY2Av4KVWc", "-Nx2n3fX4tZXG6DFHj8O"]  # List of power plant IDs
