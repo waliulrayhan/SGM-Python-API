@@ -9,7 +9,7 @@ firebase_admin.initialize_app(cred, {
 })
 
 # List of power plant IDs
-plant_ids = ['-Nx2n3fX4tZXG6DFHj8O', '-NxXNR6vVdQY2Av4KVWc']
+plant_ids = ['-Nx2n3fX4tZXG6DFHj8O', '-NxXNR6vVdQY2Av4KVWc', '-Nya8gUllGemye6qSYcs']
 
 # Initialize lists to store data
 data_frames = []

@@ -59,7 +59,7 @@ def save_predictions(plant_id, demand_forecast, capacity_forecast):
 
 def main():
     # List of power plant IDs
-    plant_ids = ['-Nx2n3fX4tZXG6DFHj8O', '-NxXNR6vVdQY2Av4KVWc']
+    plant_ids = ['-Nx2n3fX4tZXG6DFHj8O', '-NxXNR6vVdQY2Av4KVWc', '-Nya8gUllGemye6qSYcs']
 
     # Initialize Firebase
     initialize_firebase()
