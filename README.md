@@ -90,3 +90,19 @@ SGM
  │            └── alert
  └── Date
       └── <date>
+```
+
+### Example Code
+    ```bash
+    # Initialize Firebase
+    initialize_firebase()
+
+    # Monitor power plants and distributors
+    powerplant_ids = ["plant1", "plant2"]
+    distributor_ids = ["distributor1", "distributor2"]
+
+    monitor_capacity_changes(powerplant_ids)
+    monitor_demand_changes(distributor_ids)
+
+    ```
+
