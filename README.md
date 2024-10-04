@@ -93,16 +93,46 @@ SGM
 ```
 
 ### Example Code
-    ```bash
-    # Initialize Firebase
-    initialize_firebase()
+```bash
+# Initialize Firebase
+initialize_firebase()
 
-    # Monitor power plants and distributors
-    powerplant_ids = ["plant1", "plant2"]
-    distributor_ids = ["distributor1", "distributor2"]
+# Monitor power plants and distributors
+powerplant_ids = ["plant1", "plant2"]
+distributor_ids = ["distributor1", "distributor2"]
 
-    monitor_capacity_changes(powerplant_ids)
-    monitor_demand_changes(distributor_ids)
+monitor_capacity_changes(powerplant_ids)
+monitor_demand_changes(distributor_ids)
+```
 
-    ```
+### Historical Data Extraction
+You can extract historical data from Firebase to analyze or use in forecasting:
+```bash
+extract_historical_data(plant_id)
+```
 
+### Forecasting Example
+Train models and make predictions for the next 7 days:
+```bash
+historical_data = load_historical_data(plant_id)
+demand_data, capacity_data = prepare_data_for_prophet(historical_data)
+demand_model = train_prophet_model(demand_data)
+capacity_model = train_prophet_model(capacity_data)
+demand_forecast = make_predictions(demand_model)
+capacity_forecast = make_predictions(capacity_model)
+
+```
+
+## Contribution
+
+Feel free to open an issue or submit a pull request for any feature requests, bug fixes, or improvements.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions, feel free to contact the project team:
+
+- **Md. Waliul Islam Rayhan**: [LinkedIn](https://www.linkedin.com/in/waliulrayhan)
