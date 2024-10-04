@@ -1,4 +1,4 @@
-# SGM Python API - Smart Grid Management System
+<h1 align="center">SGM Python API - Smart Grid Management System</h1>
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
